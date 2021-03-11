@@ -57,13 +57,33 @@
 
             var topic = message.destinationName;
             var payload = message.payloadString;
-            count++;
-            const point = [new Date().getTime(), count];
-            const series = chart.series[0],
-                shift = series.data.length > 200; // shift if the series is longer than 20
+            try {
+                const observation = JSON.parse(payload);
+                count++;
+                console.log("Received ", count , " observations.");
 
-            // add the point
-            chart.series[0].addPoint(point, true, shift);
+                // const observationName = observation.floor + "-" + observation.placementRoom + "-" + observation.climateZone;
+                const observationName = "Temp";
+                const seriesFilter = (element) => element.name == observationName;
+
+                var seriesIndex = options.series.findIndex(seriesFilter);
+                console.log("SeriesIndex for ", observationName, " is: ", seriesIndex);
+                if (seriesIndex == -1) {
+                    options.series.push({
+                        name: observationName,
+                        data: []
+                    });
+                    seriesIndex = options.series.findIndex(seriesFilter);
+                }
+                const observationValue = observation.observedValue;
+                const point = [new Date().getTime(), observationValue];
+                const series = chart.series[seriesIndex];
+                const shift = series.data.length > 200; // shift if the series is longer than 200
+                // add the point
+                series.addPoint(point, true, shift);
+            } catch (e) {
+                console.warn("Failed to create json from: ", payload);
+            }
 
             $('#ws').prepend('<li>' + topic + ' = ' + payload + '</li>');
         };
