@@ -1,0 +1,13 @@
+{
+  "recId": "cc96e3eb-f111-4de8-8e6c-55adaaa385ce",
+  "realEstate": "U2",
+  "building": "1",
+  "floor": "15",
+  "placementRoom": "101",
+  "climateZone": "3",
+  "sensorType": "temp",
+  "measurementUnit": "celsius",
+  "observedValue": 23.65,
+  "observedAt": "2021-03-11T01:01:50Z",
+  "receivedAt": "2021-03-11T01:20:25.276699Z"
+}

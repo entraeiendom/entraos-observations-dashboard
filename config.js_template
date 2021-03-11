@@ -1,0 +1,7 @@
+host = 'mqtt-websocket.entraos.io';
+port = 9001;
+subscriptionClientId = '<tobeset>';
+subscriptionClientPassword = '<tobeset>';
+topic = 'accounts/<accountId>/<subscriptionId>';
+useTLS = true;
+cleansession = true;
