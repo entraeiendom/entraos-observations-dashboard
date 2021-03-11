@@ -85,8 +85,6 @@
                 const series = chart.series[seriesIndex];
                 const shift = series.data && series.data.length > 200; // shift if the series is longer than 200
                 series.addPoint(point, true, shift);
-                // } catch (TypeError) {
-                //    console("hei", )
             } catch (e) {
                 console.warn("Failed to add point. Payload ", payload, " reason: ", e);
             }
@@ -122,15 +120,14 @@
         }
 
 
-        async function requestRandomData() {
-            const point = [new Date().getTime(), Math.random() * 10];
+        function generateRandomTemp() {
+            const point = [new Date().getTime(), (Math.random() * 10) + 10];
             const series = chart.series[0],
-                shift = series.data.length > 20; // shift if the series is longer than 20
+                shift = series.data.length > 200; // shift if the series is longer than 20
 
-            // add the point
             chart.series[0].addPoint(point, true, shift);
             // call it again after one second
-            setTimeout(requestData, 1000);
+            setTimeout(generateRandomTemp, 30000);
         };
 
         var options = {
@@ -138,8 +135,7 @@
                 renderTo: 'container',
                 defaultSeriesType: 'spline',
                 events: {
-                    load: requestData
-                    // load: requestRandomData
+                    // load: requestData
                 }
             },
             title: {
@@ -159,7 +155,7 @@
                 }
             },
             series: [{
-                name: 'Temp',
+                name: 'Random Temp',
                 data: []
             }]
         };
@@ -167,6 +163,7 @@
 
         window.addEventListener('load', function () {
             chart = new Highcharts.Chart(options);
+            generateRandomTemp();
         });
 
 
